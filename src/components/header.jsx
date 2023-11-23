@@ -6,5 +6,5 @@ function Header () {
         </header>
     );
 }
-// Export to call it up in index.js
+// Export to call it up in app.jsx
 export default Header;

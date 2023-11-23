@@ -9,3 +9,7 @@ Create a Pokédex that shows a list of all Pokémon with links to stats and othe
 - bootstrap@5.3.2
 - react-bootstrap
 - react-router-dom
+
+## Features
+
+**TODO**

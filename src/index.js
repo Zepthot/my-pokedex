@@ -8,7 +8,7 @@ import App from './app.jsx';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 // Add components to tag
 root.render(
-    <React.StrictMode>
+    // <React.StrictMode> comment to avoid double render of useEffect
         <App />
-    </React.StrictMode>
+    // </React.StrictMode>
 );
