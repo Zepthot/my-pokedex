@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
+import Row from 'react-bootstrap/Row'
 // import assets
 import pokeball from '../assets/pokeball.png';
 // import css
@@ -55,9 +56,9 @@ function Gallery () {
     }, [offset]);
     return (
         <div className="gallery">
-            <h2>List of pokemon gen1</h2>
+            <h2>List of pokemon</h2>
             {/* display pokémon image, numbers, name and types in a list */}
-            <ul>
+            <Row lg={{cols:4}} xl={{cols: 5}} xxl={{cols:5}} className="gallery__group">
                 {data.map((pkmn) => {
                     return (
                     <li key={pkmn.id}>
@@ -79,7 +80,7 @@ function Gallery () {
                         </Card>
                     </li>
                 )})}
-            </ul>
+            </Row>
             {/* button to trigger useEffect and add 25 to display */}
             {offset < totalOffset && (
                 <button onClick={() => setOffset(offset + 25)}>{loading ? "Loading..." : "Load more"}</button>
