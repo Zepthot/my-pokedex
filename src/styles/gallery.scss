@@ -4,13 +4,22 @@
 .gallery__group {
     gap: 20px;
     justify-content: center;
+    --bs-gutter-x: 0;
 
     li {
         list-style: none;
     }
+
+    .gallery__group__button {
+        min-width: 20vw;
+        height: 15vh;
+        padding: 0;
+        border: none;
+        text-decoration: none;
+    }
     // card
     .gallery__card {
-        width: 20vw;
+        min-width: 20vw;
         height: 15vh;
         flex-direction: row-reverse;
         // images of pokemon + pokeball

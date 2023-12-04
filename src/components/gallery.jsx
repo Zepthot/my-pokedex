@@ -1,8 +1,10 @@
 // import libraries
 import { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
-import Row from 'react-bootstrap/Row'
+import Row from 'react-bootstrap/Row';
+import Spinner from 'react-bootstrap/Spinner';
 // import assets
 import pokeball from '../assets/pokeball.png';
 // import css
@@ -34,12 +36,12 @@ function Gallery () {
                     const resp = await fetch(pkmn.url);
                     const detailsPkmn = await resp.json();
                     const homeSprite = detailsPkmn.sprites.front_default;
-                    const pkmnId = detailsPkmn.id.toString().padStart(4, '0');
+                    const pkmnNb = detailsPkmn.id.toString().padStart(4, '0');
                     const pkmnTypes = [];
                     for (let i = 0; i < detailsPkmn.types.length; i++) {
                         pkmnTypes.push(detailsPkmn.types[i].type.name);
                     }
-                    const pkmnTemp = {sprite : `${homeSprite}`, id : `${pkmnId}`, name : `${pkmn.name}`};
+                    const pkmnTemp = {sprite : `${homeSprite}`, id : `${detailsPkmn.id}`, number : `${pkmnNb}`, name : `${detailsPkmn.species.name}`};
                     pkmnTemp.types = pkmnTypes;
                     listPkmn.push(pkmnTemp);
                 }
@@ -54,14 +56,15 @@ function Gallery () {
         }
         fetchData();
     }, [offset]);
+
     return (
         <div className="gallery">
             <h2>List of pokemon</h2>
             {/* display pokémon image, numbers, name and types in a list */}
-            <Row lg={{cols:4}} xl={{cols: 5}} xxl={{cols:5}} className="gallery__group">
-                {data.map((pkmn) => {
+            <Row xs={{cols:2}} sm={{cols:2}} md={{cols:3}} lg={{cols:4}} xl={{cols: 5}} xxl={{cols:5}} className="gallery__group">
+                {data && data.map((pkmn) => {
                     return (
-                    <li key={pkmn.id}>
+                    <Link key={pkmn.id} to={`/${pkmn.id}`} className="gallery__group__button">
                         {/* card of pokemon */}
                         <Card border="dark" className={`gallery__card ${pkmn.types[0]}-light`} >
                             <div className="gallery__card__images">
@@ -69,7 +72,7 @@ function Gallery () {
                                 <Card.Img variant="top" src={pkmn.sprite} alt={pkmn.name} />
                             </div>
                             <Card.Body className="gallery__card__body">
-                                <Card.Text className="gallery__card__body__id">#{pkmn.id}</Card.Text>
+                                <Card.Text className="gallery__card__body__id">#{pkmn.number}</Card.Text>
                                 <Card.Title className="gallery__card__body__name">{`${pkmn.name}`.charAt(0).toUpperCase()}{`${pkmn.name}`.slice(1)}</Card.Title>
                                 <div className="gallery__card__body__types">
                                     {pkmn.types.map((type, index) => (
@@ -78,12 +81,16 @@ function Gallery () {
                                 </div>
                             </Card.Body>
                         </Card>
-                    </li>
+                    </Link>
                 )})}
             </Row>
             {/* button to trigger useEffect and add 25 to display */}
             {offset < totalOffset && (
-                <button onClick={() => setOffset(offset + 25)}>{loading ? "Loading..." : "Load more"}</button>
+                <button onClick={() => setOffset(offset + 25)}>{loading ? (
+                    <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                ) : "Load more"}</button>
             )}
         </div>
     );
