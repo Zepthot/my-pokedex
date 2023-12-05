@@ -35,13 +35,13 @@ function Gallery () {
                 for (const pkmn of json.results) {
                     const resp = await fetch(pkmn.url);
                     const detailsPkmn = await resp.json();
-                    const homeSprite = detailsPkmn.sprites.front_default;
+                    const offSprite = detailsPkmn.sprites.other['official-artwork'].front_default;
                     const pkmnNb = detailsPkmn.id.toString().padStart(4, '0');
                     const pkmnTypes = [];
                     for (let i = 0; i < detailsPkmn.types.length; i++) {
                         pkmnTypes.push(detailsPkmn.types[i].type.name);
                     }
-                    const pkmnTemp = {sprite : `${homeSprite}`, id : `${detailsPkmn.id}`, number : `${pkmnNb}`, name : `${detailsPkmn.species.name}`};
+                    const pkmnTemp = {sprite : `${offSprite}`, id : `${detailsPkmn.id}`, number : `${pkmnNb}`, name : `${detailsPkmn.species.name}`};
                     pkmnTemp.types = pkmnTypes;
                     listPkmn.push(pkmnTemp);
                 }
