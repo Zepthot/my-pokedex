@@ -4,8 +4,10 @@ import { useParams } from "react-router-dom";
 import Spinner from 'react-bootstrap/Spinner';
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 import Table from 'react-bootstrap/Table';
+import Carousel from 'react-bootstrap/Carousel';
 import { FaStar } from "react-icons/fa6";
 // import assets
 import pokeball from '../../assets/pokeball.png';
@@ -21,9 +23,15 @@ function Pokemon () {
 
     const [loading, setLoading] = useState(true);
 
-    const [isActive, setActive] = useState('about');
-
     const [isShiny, setShiny] = useState(false);
+
+    const [key, setKey] = useState('about');
+
+    const [index, setIndex] = useState(0);
+
+    const handleSelect = (selectedIndex) => {
+        setIndex(selectedIndex);
+    };
 
     useEffect(() => {
         const fetchPkmn = async () => {
@@ -41,14 +49,14 @@ function Pokemon () {
     }, []);
 
     let totalStats = 0;
-    // use tabs on each section in menu instead
-    // add data in about
+    // add data in about with pokemon-species/6/
     // tab évolution type tree struct + image on line for method + overlay BS clickable full description
     // add toasts on homepage 'welcome in my pokedex blablabla'
     // add carrousel for gallery [offi + offish] + [front + frontsh] + [back + backsh] + [home + homesh] + dreamworld
     // add pixels on div stats
     // add pagination on bottom
-    // add filter in header by type route on new page
+    // add filter in header with dropdown by type route on new page
+    // add toasts with timeout on api call
     return (
         <div >
             {loading ? (
@@ -56,8 +64,8 @@ function Pokemon () {
                 <span className="visually-hidden">Loading...</span>
             </Spinner>
             ) : (
-                <div className='pkmn'>
-                    <div className={`pkmn__header ${data.types[0].type.name}-light`}>
+                <div className={`pkmn ${data.types[0].type.name}-light`}>
+                    <div className='pkmn__header'>
                         {loading ? (
                         <Spinner animation="border" role="status">
                             <span className="visually-hidden">Loading...</span>
@@ -65,7 +73,7 @@ function Pokemon () {
                         ) : (
                         <div className="pkmn__header__images">
                             <img src={pokeball} alt="Pokéball transparent" className="pkmn__header__images__pokeball"/>
-                            <img src={isShiny ? (data.sprites.other['official-artwork'].front_shiny) : (data.sprites.other['official-artwork'].front_default)} alt={data.name} className='pkmn__header__images__sprite'/>
+                            <img src={isShiny ? (data.sprites.other['official-artwork'].front_shiny) : (data.sprites.other['official-artwork'].front_default)} alt={isShiny ? `${data.name} shiny` : (data.name)} className='pkmn__header__images__sprite'/>
                         </div>
                         )}
                         <div className='pkmn__header__infos'>
@@ -80,79 +88,103 @@ function Pokemon () {
                                 ))}
                             </div>
                         </div>
-                        <ButtonGroup vertical className='pkmn__header__buttonmenu'>
-                            <Button variant='' className={isActive === 'about' ? `${data.types[0].type.name}` : `${data.types[0].type.name}-light`} onClick={() => setActive('about')}>About</Button>
-                            <Button variant='' className={isActive === 'stats' ? `${data.types[0].type.name}` : `${data.types[0].type.name}-light`} onClick={() => setActive('stats')}>Statistics</Button>
-                            <Button variant='' className={isActive === 'gallery' ? `${data.types[0].type.name}` : `${data.types[0].type.name}-light`} onClick={() => setActive('gallery')}>Gallery</Button>
-                        </ButtonGroup>
                     </div>
-                    <section id='about' className='pkmn__section pkmn__about'>
-                        <h2>About</h2>
-                        <Table borderless>
-                            <thead>
-                                <tr>
-                                    <th>Pokédex Data</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Height</td>
-                                    <td>{data.height/10} m</td>
-                                </tr>
-                                <tr>
-                                    <td>Weight</td>
-                                    <td>{data.weight/10} kg</td>
-                                </tr>
-                                <tr>
-                                    <td>Abilities</td>
-                                    <td>
-                                        <ol>
-                                            {data.abilities.map((ability, index) => {
-                                        return (
-                                            <li key={index}>{ability.ability.name.charAt(0).toUpperCase()}{ability.ability.name.slice(1)}</li>
-                                    )})}</ol>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </Table>
-                    </section>
-                    <section id='stats' className='pkmn__section pkmn__stats'>
-                        <h2>Statistics</h2>
-                        <Table borderless>
-                                <thead>
-                                    <tr>
-                                        <th>Base Stats</th>
-                                    </tr>
-                                </thead>
-                                    {data.stats.map((stat, index) => {
-                                        totalStats += stat.base_stat;
-                                        return (
-                                            <tbody key={index}>
-                                                <tr>
-                                                    <td>{stat.stat.name.charAt(0).toUpperCase()}{stat.stat.name.slice(1)}</td>
-                                                    <td>{stat.base_stat}</td>
-                                                    <td className='pkmn__stats__bars'><div className={`${data.types[0].type.name} pkmn__stats__bars__bar`}></div></td>
-                                                </tr>
-                                            </tbody>
-                                    )})}
-                                    <tfoot>
+                    <Tabs activeKey={key} onSelect={(k) => setKey(k)} className={`mb-3 ${data.types[0].type.name}`}>
+                        <Tab eventKey='about' title='About' className={`pkmn__tab ${data.types[0].type.name}`}>
+                            <section id='about' className='pkmn__tab__section pkmn__about'>
+                                <Table borderless>
+                                    <thead>
                                         <tr>
-                                            <td>Total</td>
-                                            <td>{totalStats}</td>
+                                            <th>Pokédex Data</th>
                                         </tr>
-                                    </tfoot>
-                            </Table>
-                    </section>
-                    <section id='gallery' className='pkmn__section pkmn__gallery'>
-                        <h2>Gallery</h2>
-                        <img src={data.sprites.front_default} alt='front' />
-                        <img src={data.sprites.front_shiny} alt='fronts' />
-                        <img src={data.sprites.back_default} alt='back' />
-                        <img src={data.sprites.back_shiny} alt='backs' />
-                        <img src={data.sprites.other.home.front_default} alt='home' />
-                        <img src={data.sprites.other.home.front_shiny} alt='homes' />
-                        <img src={data.sprites.other.dream_world.front_default} alt='dreamworld' />
-                    </section>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Height</td>
+                                            <td>{data.height/10} m</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Weight</td>
+                                            <td>{data.weight/10} kg</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Abilities</td>
+                                            <td>
+                                                <ol>
+                                                    {data.abilities.map((ability, index) => {
+                                                return (
+                                                    <li key={index}>{ability.ability.name.charAt(0).toUpperCase()}{ability.ability.name.slice(1)}</li>
+                                            )})}</ol>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
+                            </section>
+                        </Tab>
+                        <Tab eventKey='stats' title='Statistics' className={`pkmn__tab ${data.types[0].type.name}`}>
+                            <section id='stats' className='pkmn__tab__section pkmn__stats'>
+                                <Table borderless>
+                                        <thead>
+                                            <tr>
+                                                <th>Base Stats</th>
+                                            </tr>
+                                        </thead>
+                                            {data.stats.map((stat, index) => {
+                                                totalStats += stat.base_stat;
+                                                return (
+                                                    <tbody key={index}>
+                                                        <tr>
+                                                            <td>{stat.stat.name.charAt(0).toUpperCase()}{stat.stat.name.slice(1)}</td>
+                                                            <td>{stat.base_stat}</td>
+                                                            <td className='pkmn__stats__bars'><div style={{width: `${stat.base_stat}px`}} className={`${data.types[0].type.name} pkmn__stats__bars__bar`}></div></td>
+                                                        </tr>
+                                                    </tbody>
+                                            )})}
+                                            <tfoot>
+                                                <tr>
+                                                    <td>Total</td>
+                                                    <td>{totalStats}</td>
+                                                </tr>
+                                            </tfoot>
+                                    </Table>
+                            </section>
+                        </Tab>
+                        <Tab eventKey='gallery' title='Gallery' className={`pkmn__tab ${data.types[0].type.name}`}>
+                            <section id='gallery' className='pkmn__tab__section pkmn__gallery'>
+                                <Carousel activeIndex={index} onSelect={handleSelect}>
+                                    <Carousel.Item>
+                                        <img src={data.sprites.other['official-artwork'].front_default} alt={`Official artwork of ${data.name}`} />
+                                        <img src={data.sprites.other['official-artwork'].front_shiny} alt={`Official artwork of ${data.name} shiny`} />
+                                        <Carousel.Caption>
+                                            <h2>{data.name}</h2>
+                                        </Carousel.Caption>
+                                    </Carousel.Item>
+                                    <Carousel.Item>
+                                        <img src={data.sprites.front_default} alt='front' />
+                                        <img src={data.sprites.back_default} alt='back' />
+                                        <img src={data.sprites.front_shiny} alt='fronts' />
+                                        <img src={data.sprites.back_shiny} alt='backs' />
+                                        <Carousel.Caption>
+                                            <h2>{data.name}</h2>
+                                        </Carousel.Caption>
+                                    </Carousel.Item>
+                                    <Carousel.Item>
+                                        <img src={data.sprites.other.home.front_default} alt='home' />
+                                        <img src={data.sprites.other.home.front_shiny} alt='homes' />
+                                        <Carousel.Caption>
+                                            <h2>{data.name}</h2>
+                                        </Carousel.Caption>
+                                    </Carousel.Item>
+                                    <Carousel.Item>
+                                        <img src={data.sprites.other.dream_world.front_default} alt='dreamworld' />
+                                        <Carousel.Caption>
+                                            <h2>{data.name}</h2>
+                                        </Carousel.Caption>
+                                    </Carousel.Item>
+                                </Carousel>
+                            </section>
+                        </Tab>
+                    </Tabs>
                 </div>
             )}
         </div>

@@ -80,25 +80,42 @@
         }
     }
 
-    .pkmn__section {
-        width: 40vw;
+    .nav-tabs {
+        margin-bottom: 0 !important;
+        padding-bottom: 1rem;
+        border: 0;
+        border-top-left-radius: var(--bs-nav-tabs-border-radius);
+        border-top-right-radius: var(--bs-nav-tabs-border-radius);
+        
+        .nav-link {
+            border-radius: var(--bs-nav-tabs-border-radius);
+        }
 
-        td {
-            width: 20vw;
+        button {
+            color: #E5E5E5;
         }
     }
+    
+    .pkmn__tab {
+        border-radius: 1rem;
 
-    // .pkmn__about {
-        
-    // }
+        .pkmn__tab__section {
+            width: 40vw;
+            padding: 1.5rem;
+    
+            td {
+                width: 20vw;
+            }
+        }
 
-    .pkmn__stats {
+        .pkmn__stats {
 
-        .pkmn__stats__bars {
-            vertical-align: middle;
+            .pkmn__stats__bars {
+                vertical-align: middle;
 
-            .pkmn__stats__bars__bar {
-                height: 5px;
+                .pkmn__stats__bars__bar {
+                    height: 5px;
+                }
             }
         }
     }
