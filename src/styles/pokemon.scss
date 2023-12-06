@@ -100,7 +100,7 @@
         border-radius: 1rem;
 
         .pkmn__tab__section {
-            width: 40vw;
+            width: 42vw;
             padding: 1.5rem;
     
             td {
@@ -116,6 +116,32 @@
                 .pkmn__stats__bars__bar {
                     height: 5px;
                 }
+            }
+        }
+
+        .pkmn__gallery {
+
+            .pkmn__gallery__item {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                margin-bottom: 80px;
+
+                img {
+                    width: 256px;
+                    height: 256px;
+                }
+
+                .pkmn__gallery__item__defaut {
+                    width: 128px;
+                    height: 128px;
+                }
+            }
+
+            .gallery__item__grid {
+                display: grid;
+                grid-template-columns: repeat(2, 2fr);
+                justify-items: center;
             }
         }
     }

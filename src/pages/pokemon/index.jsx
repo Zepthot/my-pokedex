@@ -81,7 +81,7 @@ function Pokemon () {
                                 <p className='pkmn__header__infos__number__star__numb'>#{id.toString().padStart(4, '0')}</p>
                                 <Button variant='' className='pkmn__header__infos__number__star__button' onClick={() => setShiny(!isShiny)}><FaStar style={isShiny ? {color: "gold"} : {color: "ghostwhite"}} /></Button>
                             </div>
-                            <h1 className='pkmn__header__infos__name'>{`${data.name}`.charAt(0).toUpperCase()}{`${data.name}`.slice(1)}</h1>
+                            <h1 className='pkmn__header__infos__name'>{data.name.charAt(0).toUpperCase()}{data.name.slice(1)}</h1>
                             <div className='pkmn__header__infos__types'>
                                 {data.types.map((type, index) => (
                                     <Badge key={index} className={`pkmn__header__infos__types__badge ${type.type.name}`} bg="">{`${type.type.name}`.toUpperCase()}</Badge>
@@ -153,32 +153,40 @@ function Pokemon () {
                             <section id='gallery' className='pkmn__tab__section pkmn__gallery'>
                                 <Carousel activeIndex={index} onSelect={handleSelect}>
                                     <Carousel.Item>
-                                        <img src={data.sprites.other['official-artwork'].front_default} alt={`Official artwork of ${data.name}`} />
-                                        <img src={data.sprites.other['official-artwork'].front_shiny} alt={`Official artwork of ${data.name} shiny`} />
+                                        <div className='pkmn__gallery__item'>
+                                            <img src={data.sprites.other['official-artwork'].front_default} alt={`Official artwork of ${data.name}`} />
+                                            <img src={data.sprites.other['official-artwork'].front_shiny} alt={`Official artwork of ${data.name} shiny`} />
+                                        </div>
                                         <Carousel.Caption>
-                                            <h2>{data.name}</h2>
+                                            <h2>Official artwork of {data.name.charAt(0).toUpperCase()}{data.name.slice(1)}</h2>
                                         </Carousel.Caption>
                                     </Carousel.Item>
                                     <Carousel.Item>
-                                        <img src={data.sprites.front_default} alt='front' />
-                                        <img src={data.sprites.back_default} alt='back' />
-                                        <img src={data.sprites.front_shiny} alt='fronts' />
-                                        <img src={data.sprites.back_shiny} alt='backs' />
+                                        <div className='pkmn__gallery__item gallery__item__grid'>
+                                            <img className='pkmn__gallery__item__defaut' src={data.sprites.front_default} alt={`Sprite from front of ${data.name}`} />
+                                            <img className='pkmn__gallery__item__defaut' src={data.sprites.back_default} alt={`Sprite from back of ${data.name}`} />
+                                            <img className='pkmn__gallery__item__defaut' src={data.sprites.front_shiny} alt={`Sprite from front of ${data.name} shiny`} />
+                                            <img className='pkmn__gallery__item__defaut' src={data.sprites.back_shiny} alt={`Sprite from back of ${data.name} shiny`} />
+                                        </div>
                                         <Carousel.Caption>
-                                            <h2>{data.name}</h2>
+                                            <h2>Sprite of {data.name.charAt(0).toUpperCase()}{data.name.slice(1)}</h2>
                                         </Carousel.Caption>
                                     </Carousel.Item>
                                     <Carousel.Item>
-                                        <img src={data.sprites.other.home.front_default} alt='home' />
-                                        <img src={data.sprites.other.home.front_shiny} alt='homes' />
+                                        <div className='pkmn__gallery__item'>
+                                            <img src={data.sprites.other.home.front_default} alt={`Home artwork from front of ${data.name}`} />
+                                            <img src={data.sprites.other.home.front_shiny} alt={`Home artwork from front of ${data.name} shiny`} />
+                                        </div>
                                         <Carousel.Caption>
-                                            <h2>{data.name}</h2>
+                                            <h2>Sprite from Home of {data.name.charAt(0).toUpperCase()}{data.name.slice(1)}</h2>
                                         </Carousel.Caption>
                                     </Carousel.Item>
                                     <Carousel.Item>
-                                        <img src={data.sprites.other.dream_world.front_default} alt='dreamworld' />
+                                        <div className='pkmn__gallery__item'>
+                                            <img src={data.sprites.other.dream_world.front_default} alt={`Dreamworld artwork from front of ${data.name}`} />
+                                        </div>
                                         <Carousel.Caption>
-                                            <h2>{data.name}</h2>
+                                            <h2>Sprite from Dreamworld of {data.name.charAt(0).toUpperCase()}{data.name.slice(1)}</h2>
                                         </Carousel.Caption>
                                     </Carousel.Item>
                                 </Carousel>
