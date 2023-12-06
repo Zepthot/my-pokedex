@@ -51,9 +51,6 @@ function Pokemon () {
     let totalStats = 0;
     // add data in about with pokemon-species/6/
     // tab évolution type tree struct + image on line for method + overlay BS clickable full description
-    // add toasts on homepage 'welcome in my pokedex blablabla'
-    // add carrousel for gallery [offi + offish] + [front + frontsh] + [back + backsh] + [home + homesh] + dreamworld
-    // add pixels on div stats
     // add pagination on bottom
     // add filter in header with dropdown by type route on new page
     // add toasts with timeout on api call
