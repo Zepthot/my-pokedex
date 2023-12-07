@@ -103,19 +103,27 @@
         .pkmn__tab__section {
             width: 42vw;
             padding: 1.5rem;
+
+            .pkmn__tab__section__table{
+                background-color: #E5E5E5;
+                border-radius: 1rem;
+                margin-bottom: 0;
+                
+                th {
+                    background-color: transparent;
+                }
+
+                td {
+                    width: 20vw;
+                    background-color: transparent;
+                }
+
+                .pkmn__stats__bars {
+                    vertical-align: middle;
     
-            td {
-                width: 20vw;
-            }
-        }
-
-        .pkmn__stats {
-
-            .pkmn__stats__bars {
-                vertical-align: middle;
-
-                .pkmn__stats__bars__bar {
-                    height: 5px;
+                    .pkmn__stats__bars__bar {
+                        height: 5px;
+                    }
                 }
             }
         }

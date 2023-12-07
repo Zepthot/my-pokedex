@@ -9,6 +9,8 @@ import Tabs from 'react-bootstrap/Tabs';
 import Table from 'react-bootstrap/Table';
 import Carousel from 'react-bootstrap/Carousel';
 import { FaStar } from "react-icons/fa6";
+import { IoMdFemale } from "react-icons/io";
+import { IoMdMale } from "react-icons/io";
 // import assets
 import pokeball from '../../assets/pokeball.png';
 // import css
@@ -20,6 +22,7 @@ function Pokemon () {
     const { id } = useParams();
 
     const [data, setData] = useState([]);
+    const [dataspec, setDataspec] = useState([]);
 
     const [loading, setLoading] = useState(true);
 
@@ -39,6 +42,9 @@ function Pokemon () {
                 const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
                 const json = await res.json();
                 setData(json);
+                const resp = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`);
+                const jsonn = await resp.json();
+                setDataspec(jsonn);
                 setLoading(false);
             } catch (error) {
                 console.error(error);
@@ -49,11 +55,10 @@ function Pokemon () {
     }, []);
 
     let totalStats = 0;
-    // add data in about with pokemon-species/6/
     // tab évolution type tree struct + image on line for method + overlay BS clickable full description
     // add pagination on bottom
     // add filter in header with dropdown by type route on new page
-    // add toasts with timeout on api call
+    // add toasts with timeout on api call + animation
     return (
         <div >
             {loading ? (
@@ -89,13 +94,18 @@ function Pokemon () {
                     <Tabs activeKey={key} onSelect={(k) => setKey(k)} className={`mb-3 ${data.types[0].type.name}`}>
                         <Tab eventKey='about' title='About' className={`pkmn__tab ${data.types[0].type.name}`}>
                             <section id='about' className='pkmn__tab__section pkmn__about'>
-                                <Table borderless>
+                                <Table borderless className='pkmn__tab__section__table'>
                                     <thead>
                                         <tr>
                                             <th>Pokédex Data</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <tr>
+                                            <td>Category</td>
+                                            <td>{dataspec.genera[7].genus}</td>
+                                        </tr>
                                         <tr>
                                             <td>Height</td>
                                             <td>{data.height/10} m</td>
@@ -109,9 +119,48 @@ function Pokemon () {
                                             <td>
                                                 <ol>
                                                     {data.abilities.map((ability, index) => {
-                                                return (
-                                                    <li key={index}>{ability.ability.name.charAt(0).toUpperCase()}{ability.ability.name.slice(1)}</li>
-                                            )})}</ol>
+                                                        return (
+                                                            <li key={index}>{ability.ability.name.charAt(0).toUpperCase()}{ability.ability.name.slice(1)}</li>
+                                                    )})}
+                                                </ol>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Egg Groups</td>
+                                            <td>
+                                                <ol>
+                                                    {dataspec.egg_groups.map((group, index) => {
+                                                        return (
+                                                            <li key={index}>{group.name.charAt(0).toUpperCase()}{group.name.slice(1)}</li>
+                                                    )})}
+                                                </ol>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Hatch time</td>
+                                            <td>{dataspec.hatch_counter} cycles - {dataspec.hatch_counter * 128} steps</td>
+                                        </tr>
+                                        <tr>
+                                            <td>EV yield</td>
+                                            <td>
+                                                {/* eslint-disable-next-line */}
+                                                {data.stats.map((stat) => {
+                                                    if(stat.effort > 0) {
+                                                        return (
+                                                            `+${stat.effort} ${stat.stat.name.charAt(0).toUpperCase()}${stat.stat.name.slice(1)}`
+                                                        )
+                                                    }
+                                                })}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Color</td>
+                                            <td>{dataspec.color.name.charAt(0).toUpperCase()}{dataspec.color.name.slice(1)}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gender ratio</td>
+                                            <td>
+                                                {(dataspec.gender_rate/8)*100}% <IoMdFemale /> {100-(dataspec.gender_rate/8)*100}% <IoMdMale />
                                             </td>
                                         </tr>
                                     </tbody>
@@ -120,10 +169,12 @@ function Pokemon () {
                         </Tab>
                         <Tab eventKey='stats' title='Statistics' className={`pkmn__tab ${data.types[0].type.name}`}>
                             <section id='stats' className='pkmn__tab__section pkmn__stats'>
-                                <Table borderless>
+                                <Table borderless className='pkmn__tab__section__table'>
                                         <thead>
                                             <tr>
                                                 <th>Base Stats</th>
+                                                <th></th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                             {data.stats.map((stat, index) => {
@@ -141,6 +192,7 @@ function Pokemon () {
                                                 <tr>
                                                     <td>Total</td>
                                                     <td>{totalStats}</td>
+                                                    <td></td>
                                                 </tr>
                                             </tfoot>
                                     </Table>
