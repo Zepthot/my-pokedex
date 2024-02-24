@@ -1,15 +1,12 @@
 // import libraries
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
-import Card from 'react-bootstrap/Card';
-import Badge from 'react-bootstrap/Badge';
-import Row from 'react-bootstrap/Row';
-import Spinner from 'react-bootstrap/Spinner';
+import { Card, Badge, Row, Spinner, Placeholder } from 'react-bootstrap';
 // import assets
 import pokeball from '../assets/pokeball.png';
 // import css
-import '../styles/gallery.scss';
-import '../styles/types.scss';
+import '../assets/styles/gallery.scss';
+import '../assets/styles/types.scss';
 
 // Gallery function
 function Gallery () {
@@ -21,6 +18,7 @@ function Gallery () {
     const [totalOffset, setTotalOffset] = useState(0);
     // to change button on loading datas
     const [loading, setLoading] = useState(false);
+    const fakeCards = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 
     // fetch datas of 25 next pokémons on click
     useEffect(() => {
@@ -59,9 +57,28 @@ function Gallery () {
 
     return (
         <div className="gallery">
-            <h2>List of pokemon</h2>
             {/* display pokémon image, numbers, name and types in a list */}
             <Row xs={{cols:2}} sm={{cols:2}} md={{cols:3}} lg={{cols:4}} xl={{cols: 5}} xxl={{cols:5}} className="gallery__group">
+                {loading ? 
+                <React.Fragment>
+                    {fakeCards.map(element => {
+                        return (
+                            <Card border="dark" className='gallery__card normal-light'>
+                                <div className="gallery__card__images">
+                                    <Card.Img src={pokeball} alt="Pokéball transparent" className="gallery__card__images__pokeball"/>
+                                    <Spinner className="gallery__card__images__loading" />
+                                </div>
+                                <Card.Body className="gallery__card__body">
+                                    <Card.Text className="gallery__card__body__id">#<Placeholder md={4} /></Card.Text>
+                                    <Card.Title className="gallery__card__body__name"><Placeholder md={10} size="lg" className='gallery__card__body__name__loading' /></Card.Title>
+                                    <div className="gallery__card__body__types">
+                                        <Badge className='card__body__types__badge normal' bg=""><Placeholder md={6} /></Badge>
+                                    </div>
+                                </Card.Body>
+                            </Card>
+                        )
+                    })}
+                </React.Fragment> : <React.Fragment>
                 {data && data.map((pkmn) => {
                     return (
                     <Link key={pkmn.id} to={`/${pkmn.id}`} className="gallery__group__button">
@@ -82,7 +99,7 @@ function Gallery () {
                             </Card.Body>
                         </Card>
                     </Link>
-                )})}
+                )})} </React.Fragment>}
             </Row>
             {/* button to trigger useEffect and add 25 to display */}
             {offset < totalOffset && (

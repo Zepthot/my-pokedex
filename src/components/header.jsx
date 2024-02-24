@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 // import css
-import '../styles/header.scss';
+import '../../src/assets/styles/header.scss';
 
 // Header function
 function Header () {

@@ -1,0 +1,24 @@
+.carouselgallery {
+    width: 512px;
+    height: 320px;
+
+    .carouselgallery__item {
+        height: 320px;
+
+        .carouselgallery__item__container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+    
+            .carouselgallery__item__container__medium {
+                width: 256px;
+                height: 256px;
+            }
+    
+            .carouselgallery__item__container__small {
+                width: 128px;
+                height: 128px;
+            }
+        }
+    }
+}
