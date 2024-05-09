@@ -1,219 +1,227 @@
 .pkmn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+
+  .pkmn__header {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 94vh;
-    height: 100%;
+    justify-content: space-between;
+    width: 100%;
+    gap: 25px;
 
-    .pkmn__header {
+    .pkmn__header__images {
+      width: 192px;
+      height: 192px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .pkmn__header__images__sprite {
+        width: inherit;
+        z-index: 1;
+        position: absolute;
+      }
+
+      .pkmn__header__images__sprite__loading {
+        width: inherit;
+        z-index: 1;
+        position: absolute;
+        height: 120px;
+        width: 120px;
+        font-size: 25px;
+      }
+
+      .pkmn__header__images__pokeball {
+        z-index: 0;
+        opacity: 30%;
+        height: 192px;
+        width: 192px;
+      }
+    }
+
+    .pkmn__header__infos {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+
+      .pkmn__header__infos__number__star {
         display: flex;
-        justify-content: space-between;
-        width: 100%;
-        gap: 25px;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        max-height: 10vh;
+        margin-top: 1vh;
+        margin-bottom: -3.5vh;
+        z-index: 1;
 
-        .pkmn__header__images {
-            width: 192px;
-            height: 192px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            .pkmn__header__images__sprite {
-                width: inherit;
-                z-index: 1;
-                position: absolute;
-            }
-
-            .pkmn__header__images__sprite__loading {
-                width: inherit;
-                z-index: 1;
-                position: absolute;
-                height: 120px;
-                width: 120px;
-                font-size: 25px;
-            }
-
-            .pkmn__header__images__pokeball {
-                z-index: 0;
-                opacity: 30%;
-                height: 192px;
-                width: 192px;
-            }
+        .pkmn__header__infos__number__star__numb {
+          font-weight: 600;
+          margin: 0;
+          width: 10vw;
+          font-size: 1.25rem;
         }
 
-        .pkmn__header__infos {
+        .pkmn__header__infos__number__star__button {
+          padding: 0;
+          border: 0;
+        }
+      }
+
+      .pkmn__header__infos__name {
+        font-size: 2.75vw;
+        color: #f0f0f0;
+      }
+
+      .pkmn__header__infos__name__loading {
+        height: 2em;
+      }
+
+      .pkmn__header__infos__types {
+        display: flex;
+        justify-content: space-evenly;
+        width: 100%;
+        gap: 5px;
+        margin-top: -2vh;
+
+        .pkmn__header__infos__types__badge {
+          width: 5vw;
+          font-size: small;
+          color: #f0f0f0;
+        }
+      }
+    }
+
+    .pkmn__header__buttonmenu {
+      position: fixed;
+      left: 10vw;
+      top: 35vh;
+    }
+  }
+
+  .nav-tabs {
+    margin-bottom: 0 !important;
+    padding: 1rem;
+    border: 0;
+    border-top-left-radius: var(--bs-nav-tabs-border-radius);
+    border-top-right-radius: var(--bs-nav-tabs-border-radius);
+
+    .nav-link {
+      border-radius: var(--bs-nav-tabs-border-radius);
+    }
+
+    .nav-link.active {
+      background-color: #f0f0f0;
+      border-color: #f0f0f0;
+    }
+
+    button {
+      color: #f0f0f0;
+    }
+  }
+
+  .pkmn__tab {
+    border-radius: 1rem;
+    min-width: 600px;
+
+    .pkmn__tab__section {
+      padding: 1.5rem;
+      display: flex;
+      justify-content: center;
+
+      .pkmn__tab__section__table {
+        background-color: #f0f0f0;
+        border-radius: 1rem;
+        margin-bottom: 0;
+
+        th {
+          background-color: transparent;
+        }
+
+        td {
+          width: 5vw;
+          background-color: transparent;
+        }
+
+        &__type {
+          text-transform: capitalize;
+          border-radius: 10px;
+          text-align: center;
+        }
+
+        .pkmn__tab__section__table__EV {
+          display: flex;
+          flex-direction: column;
+          width: auto;
+        }
+      }
+    }
+
+    .pkmn__stats {
+      width: 42vw;
+
+      .pkmn__stats__bars {
+        vertical-align: middle;
+
+        .pkmn__stats__bars__bar {
+          height: 5px;
+        }
+      }
+    }
+
+    .pkmn__evolution {
+      min-width: 42vw;
+
+      .pkmn__evolution__container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        .pkmn__evolution__container__cardEvo {
+          border: 1px solid #101010;
+          color: #f0f0f0;
+          text-decoration: none;
+          transition: color 0.2s;
+          text-align: center;
+        }
+
+        .pkmn__evolution__container__cardEvo:hover {
+          color: #101010;
+        }
+
+        .pkmn__evolution__container__treeEvo {
+          display: flex;
+          flex-direction: row;
+          gap: 25px;
+
+          .pkmn__evolution__container__treeEvo__column {
             display: flex;
             flex-direction: column;
-            justify-content: space-evenly;
-
-            .pkmn__header__infos__number__star {
-                display: flex;
-                flex-direction: row;
-                justify-content: space-around;
-                align-items: center;
-                max-height: 10vh;
-                margin-top: 1vh;
-                margin-bottom: -3.5vh;
-                z-index: 1;
-
-                .pkmn__header__infos__number__star__numb {
-                    font-weight: 600;
-                    margin: 0;
-                    width: 10vw;
-                    font-size: 1.25rem;
-                }
-
-                .pkmn__header__infos__number__star__button {
-                    padding: 0;
-                    border: 0;
-                }
-            }
-
-            .pkmn__header__infos__name {
-                font-size: 2.75vw;
-                color: #F0F0F0;
-            }
-
-            .pkmn__header__infos__name__loading {
-                height: 2em;
-            }
-
-            .pkmn__header__infos__types {
-                display: flex;
-                justify-content: space-evenly;
-                width: 100%;
-                gap: 5px;
-                margin-top: -2vh;
-                
-                .pkmn__header__infos__types__badge {
-                    width: 5vw;
-                    font-size: small;
-                    color: #F0F0F0;
-                }
-            }
-        }
-
-        .pkmn__header__buttonmenu {
-            position: fixed;
-            left: 10vw;
-            top: 35vh;
-        }
-    }
-
-    .nav-tabs {
-        margin-bottom: 0 !important;
-        padding: 1rem;
-        border: 0;
-        border-top-left-radius: var(--bs-nav-tabs-border-radius);
-        border-top-right-radius: var(--bs-nav-tabs-border-radius);
-        
-        .nav-link {
-            border-radius: var(--bs-nav-tabs-border-radius);
-        }
-
-        .nav-link.active {
-            background-color: #F0F0F0;
-            border-color: #F0F0F0;
-        }
-
-        button {
-            color: #F0F0F0;
-        }
-    }
-    
-    .pkmn__tab {
-        border-radius: 1rem;
-
-        .pkmn__tab__section {
-            padding: 1.5rem;
-
-            .pkmn__tab__section__table{
-                background-color: #F0F0F0;
-                border-radius: 1rem;
-                margin-bottom: 0;
-                
-                th {
-                    background-color: transparent;
-                }
-
-                td {
-                    width: 20vw;
-                    background-color: transparent;
-                }
-
-                .pkmn__tab__section__table__EV {
-                    display: flex;
-                    flex-direction: column;
-                }
-            }
-        }
-
-        .pkmn__stats {
-            width: 42vw;
-
-            .pkmn__stats__bars {
-                vertical-align: middle;
-
-                .pkmn__stats__bars__bar {
-                    height: 5px;
-                }
-            }
-        }
-
-        .pkmn__evolution {
-            min-width: 42vw;
-
-            .pkmn__evolution__container {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 10px;
-
-                .pkmn__evolution__container__cardEvo {
-                    border: 1px solid #101010;
-                    color: #F0F0F0;
-                    text-decoration: none;
-                    transition: color 0.2s;
-                    text-align: center;
-                }
-
-                .pkmn__evolution__container__cardEvo:hover {
-                    color: #101010;
-                }
-
-                .pkmn__evolution__container__treeEvo {
-                    display: flex;
-                    flex-direction: row;
-                    gap: 25px;
-
-                    .pkmn__evolution__container__treeEvo__column {
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        gap: 10px;
-                        width: 145px;
-                        
-                    }
-                }
-
-                .pkmn__evolution__container__cardEvo__img {
-                    width: 80px;
-                }
-            }
-        }
-
-        .pkmn__gallery {
-            width: 560px;
-            height: 368px;
-            display: flex;
             align-items: center;
-            justify-content: center;
-
-            .pkmn__gallery__loading {
-                width: 300px;
-                height: 300px;
-                font-size: 25px;
-            }
+            gap: 10px;
+            width: 145px;
+          }
         }
+
+        .pkmn__evolution__container__cardEvo__img {
+          width: 80px;
+        }
+      }
     }
+
+    .pkmn__gallery {
+      width: 560px;
+      height: 368px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .pkmn__gallery__loading {
+        width: 300px;
+        height: 300px;
+        font-size: 25px;
+      }
+    }
+  }
 }

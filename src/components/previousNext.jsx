@@ -23,7 +23,6 @@ function PreviousNext({previous, id, shiny}) {
 
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
-    console.log('previousNext loading: ', loading);
 
     useEffect(() => {
         const fetchPkmn = async () => {
