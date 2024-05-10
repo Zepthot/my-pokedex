@@ -1,6 +1,6 @@
 // import libraries
 import React, { Fragment, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Spinner,
   Badge,
@@ -18,7 +18,7 @@ import TriggerEvo from "../../components/triggerEvo";
 import CarouselGallery from "../../components/CarouselGallery";
 import PreviousNext from "../../components/previousNext";
 // import assets
-import pokeball from "../../assets/pokeball.png";
+import pokeball from "../../assets/images/pokeball.png";
 // import css
 import "../../assets/styles/types.scss";
 import "../../assets/styles/pokemon.scss";
@@ -33,10 +33,9 @@ function Pokemon() {
   const [datatype, setDataType] = useState();
   const [datatype1, setDataType1] = useState();
   const [loading, setLoading] = useState(true);
-
   const [isShiny, setShiny] = useState(false);
-
   const [key, setKey] = useState("about");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPkmn = async () => {
@@ -52,7 +51,8 @@ function Pokemon() {
         setDataspec(dataspecjson);
         // setLoading(false);
       } catch (error) {
-        console.error(error);
+        navigate("/error");
+        console.log(error);
       }
     };
     fetchPkmn();

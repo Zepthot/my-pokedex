@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Card, Badge, Row, Spinner, Placeholder } from "react-bootstrap";
 // import assets
-import pokeball from "../assets/pokeball.png";
+import pokeball from "../assets/images/pokeball.png";
 // import css
 import "../assets/styles/gallery.scss";
 import "../assets/styles/types.scss";
