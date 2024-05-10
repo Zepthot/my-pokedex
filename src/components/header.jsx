@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Toast, ToastContainer } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { GoHomeFill } from "react-icons/go";
 // import css
 import "../../src/assets/styles/header.scss";
 // Header function
@@ -11,7 +12,8 @@ function Header() {
   return (
     <header className='header'>
       <Link to='/' className='header__title'>
-        Pokedex
+        <span className='header__title__text'>Pokedex</span>
+        <GoHomeFill className='header__title__icon' />
       </Link>
       <ToastContainer position='bottom-end' className='header__toast'>
         <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide>

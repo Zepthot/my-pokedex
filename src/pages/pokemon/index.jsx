@@ -68,7 +68,9 @@ function Pokemon() {
         const response = await fetch("./types.json");
         const datatypejson = await response.json();
         setDataType(datatypejson[data.types[0].type.name]);
-        data.types[1] && setDataType1(datatypejson[data.types[1].type.name]);
+        data.types[1]
+          ? setDataType1(datatypejson[data.types[1].type.name])
+          : setDataType1(true);
         setLoading(false);
       } catch (error) {
         if (dataspec.length !== 0) {
@@ -534,7 +536,7 @@ function Pokemon() {
                   </td>
                 </tr>
                 <tr>
-                  {data && datatype && (
+                  {data && datatype && datatype1 && (
                     <React.Fragment>
                       <td className='pkmn__tab__section__table__type'>
                         x{" "}

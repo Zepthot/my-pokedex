@@ -16,9 +16,6 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  // box-shadow: 0px 10px 13px -7px #000000, 0px 0px 18px 0px rgba(0, 0, 0, 0.1);
-  // border-bottom: 5px solid rgba(0, 0, 0, 0.2);
-  // z-index: 1;
 
   .header__title {
     font-family: "BabyBoomer";
@@ -29,6 +26,30 @@
     background-color: #222222;
     border-radius: 25px;
     margin: 5px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+
+    .header__title__text {
+      transition: margin-top 300ms;
+    }
+
+    .header__title__icon {
+      height: 68px;
+      margin-bottom: -68px;
+      transition: margin-bottom 300ms;
+    }
+
+    &:hover {
+      .header__title__text {
+        margin-top: -68px;
+      }
+
+      .header__title__icon {
+        margin-bottom: 0px;
+      }
+    }
   }
 
   .header__toast {
