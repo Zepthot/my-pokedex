@@ -139,7 +139,7 @@
         }
 
         td {
-          width: 5vw;
+          width: 5em;
           background-color: transparent;
         }
 
@@ -147,6 +147,23 @@
           text-transform: capitalize;
           border-radius: 10px;
           text-align: center;
+        }
+
+        &__head {
+          text-align: center;
+          vertical-align: middle;
+        }
+
+        &__subdiv {
+          display: inline-block;
+          width: 100%;
+          text-align: center;
+        }
+
+        &__badge {
+          width: 100%;
+          text-transform: uppercase;
+          color: #f0f0f0;
         }
 
         .pkmn__tab__section__table__EV {

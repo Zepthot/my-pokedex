@@ -30,8 +30,12 @@ function Pokemon() {
   const [data, setData] = useState([]);
   const [dataspec, setDataspec] = useState([]);
   const [dataevo, setDataevo] = useState([]);
-  const [datatype, setDataType] = useState();
-  const [datatype1, setDataType1] = useState();
+  const [weaknessCol1, setWeaknessCol1] = useState();
+  const [weaknessCol2R1, setWeaknessCol2R1] = useState();
+  const [weaknessCol2R2, setWeaknessCol2R2] = useState();
+  const [weaknessCol3, setWeaknessCol3] = useState();
+  const [weaknessCol4R1, setWeaknessCol4R1] = useState();
+  const [weaknessCol4R2, setWeaknessCol4R2] = useState();
   const [loading, setLoading] = useState(true);
   const [isShiny, setShiny] = useState(false);
   const [key, setKey] = useState("about");
@@ -67,10 +71,34 @@ function Pokemon() {
         setDataevo(dataevojson);
         const response = await fetch("./types.json");
         const datatypejson = await response.json();
-        setDataType(datatypejson[data.types[0].type.name]);
-        data.types[1]
-          ? setDataType1(datatypejson[data.types[1].type.name])
-          : setDataType1(true);
+        let AllWeakness = {};
+        if (data.types[1]) {
+          const weakness0 = datatypejson[data.types[0].type.name];
+          const weakness1 = datatypejson[data.types[1].type.name];
+          for (const key in weakness0) {
+            AllWeakness[key] = weakness0[key] * weakness1[key];
+          }
+        } else {
+          AllWeakness = datatypejson[data.types[0].type.name];
+        }
+        setWeaknessCol1(
+          Object.keys(AllWeakness).filter((key) => AllWeakness[key] === 0)
+        );
+        setWeaknessCol2R1(
+          Object.keys(AllWeakness).filter((key) => AllWeakness[key] === 0.25)
+        );
+        setWeaknessCol2R2(
+          Object.keys(AllWeakness).filter((key) => AllWeakness[key] === 0.5)
+        );
+        setWeaknessCol3(
+          Object.keys(AllWeakness).filter((key) => AllWeakness[key] === 1)
+        );
+        setWeaknessCol4R1(
+          Object.keys(AllWeakness).filter((key) => AllWeakness[key] === 2)
+        );
+        setWeaknessCol4R2(
+          Object.keys(AllWeakness).filter((key) => AllWeakness[key] === 4)
+        );
         setLoading(false);
       } catch (error) {
         if (dataspec.length !== 0) {
@@ -91,7 +119,11 @@ function Pokemon() {
       }`}
     >
       <div className='pkmn__header'>
-        <PreviousNext previous={true} id={id - 1} shiny={isShiny} />
+        {id === "1" ? (
+          <PreviousNext previous={true} id='1025' shiny={isShiny} />
+        ) : (
+          <PreviousNext previous={true} id={id - 1} shiny={isShiny} />
+        )}
         <div style={{ display: "flex" }}>
           <div className='pkmn__header__images'>
             <img
@@ -164,7 +196,11 @@ function Pokemon() {
             </div>
           </div>
         </div>
-        <PreviousNext previous={false} id={id - 1 + 2} shiny={isShiny} />
+        {id === "1025" ? (
+          <PreviousNext previous={false} id='1' shiny={isShiny} />
+        ) : (
+          <PreviousNext previous={false} id={id - 1 + 2} shiny={isShiny} />
+        )}
       </div>
       <Tabs
         activeKey={key}
@@ -485,169 +521,109 @@ function Pokemon() {
             <Table borderless className='pkmn__tab__section__table'>
               <thead>
                 <tr>
-                  <th>Weakness</th>
+                  {weaknessCol1.length > 0 && (
+                    <th className='pkmn__tab__section__table__head'>
+                      Immune to
+                    </th>
+                  )}
+                  <th className='pkmn__tab__section__table__head'>
+                    Resistant to
+                  </th>
+                  <th className='pkmn__tab__section__table__head'>
+                    Damaged normally by
+                  </th>
+                  <th className='pkmn__tab__section__table__head'>Weak to</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td className='pkmn__tab__section__table__type normal'>
-                    normal
-                  </td>
-                  <td className='pkmn__tab__section__table__type grass'>
-                    grass
-                  </td>
-                  <td className='pkmn__tab__section__table__type fire'>fire</td>
-                  <td className='pkmn__tab__section__table__type water'>
-                    water
-                  </td>
-                  <td className='pkmn__tab__section__table__type electric'>
-                    electric
-                  </td>
-                  <td className='pkmn__tab__section__table__type ice'>ice</td>
-                  <td className='pkmn__tab__section__table__type fighting'>
-                    fighting
-                  </td>
-                  <td className='pkmn__tab__section__table__type poison'>
-                    poison
-                  </td>
-                  <td className='pkmn__tab__section__table__type ground'>
-                    ground
-                  </td>
-                  <td className='pkmn__tab__section__table__type flying'>
-                    flying
-                  </td>
-                  <td className='pkmn__tab__section__table__type psychic'>
-                    psychic
-                  </td>
-                  <td className='pkmn__tab__section__table__type bug'>bug</td>
-                  <td className='pkmn__tab__section__table__type rock'>rock</td>
-                  <td className='pkmn__tab__section__table__type ghost'>
-                    ghost
-                  </td>
-                  <td className='pkmn__tab__section__table__type dragon'>
-                    dragon
-                  </td>
-                  <td className='pkmn__tab__section__table__type dark'>dark</td>
-                  <td className='pkmn__tab__section__table__type steel'>
-                    steel
-                  </td>
-                  <td className='pkmn__tab__section__table__type fairy'>
-                    fairy
-                  </td>
-                </tr>
-                <tr>
-                  {data && datatype && datatype1 && (
-                    <React.Fragment>
-                      <td className='pkmn__tab__section__table__type'>
-                        x{" "}
-                        {data.types[1]
-                          ? datatype1.normal * datatype.normal
-                          : datatype.normal}
-                      </td>
-                      <td className='pkmn__tab__section__table__type'>
-                        x{" "}
-                        {data.types[1]
-                          ? datatype1.grass * datatype.grass
-                          : datatype.grass}
-                      </td>
-                      <td className='pkmn__tab__section__table__type'>
-                        x{" "}
-                        {data.types[1]
-                          ? datatype1.fire * datatype.fire
-                          : datatype.fire}
-                      </td>
-                      <td className='pkmn__tab__section__table__type'>
-                        x{" "}
-                        {data.types[1]
-                          ? datatype1.water * datatype.water
-                          : datatype.water}
-                      </td>
-                      <td className='pkmn__tab__section__table__type'>
-                        x{" "}
-                        {data.types[1]
-                          ? datatype1.electric * datatype.electric
-                          : datatype.electric}
-                      </td>
-                      <td className='pkmn__tab__section__table__type'>
-                        x{" "}
-                        {data.types[1]
-                          ? datatype1.ice * datatype.ice
-                          : datatype.ice}
-                      </td>
-                      <td className='pkmn__tab__section__table__type'>
-                        x{" "}
-                        {data.types[1]
-                          ? datatype1.fighting * datatype.fighting
-                          : datatype.fighting}
-                      </td>
-                      <td className='pkmn__tab__section__table__type'>
-                        x{" "}
-                        {data.types[1]
-                          ? datatype1.poison * datatype.poison
-                          : datatype.poison}
-                      </td>
-                      <td className='pkmn__tab__section__table__type'>
-                        x{" "}
-                        {data.types[1]
-                          ? datatype1.ground * datatype.ground
-                          : datatype.ground}
-                      </td>
-                      <td className='pkmn__tab__section__table__type'>
-                        x{" "}
-                        {data.types[1]
-                          ? datatype1.flying * datatype.flying
-                          : datatype.flying}
-                      </td>
-                      <td className='pkmn__tab__section__table__type'>
-                        x{" "}
-                        {data.types[1]
-                          ? datatype1.psychic * datatype.psychic
-                          : datatype.psychic}
-                      </td>
-                      <td className='pkmn__tab__section__table__type'>
-                        x{" "}
-                        {data.types[1]
-                          ? datatype1.bug * datatype.bug
-                          : datatype.bug}
-                      </td>
-                      <td className='pkmn__tab__section__table__type'>
-                        x{" "}
-                        {data.types[1]
-                          ? datatype1.rock * datatype.rock
-                          : datatype.rock}
-                      </td>
-                      <td className='pkmn__tab__section__table__type'>
-                        x{" "}
-                        {data.types[1]
-                          ? datatype1.ghost * datatype.ghost
-                          : datatype.ghost}
-                      </td>
-                      <td className='pkmn__tab__section__table__type'>
-                        x{" "}
-                        {data.types[1]
-                          ? datatype1.dragon * datatype.dragon
-                          : datatype.dragon}
-                      </td>
-                      <td className='pkmn__tab__section__table__type'>
-                        x{" "}
-                        {data.types[1]
-                          ? datatype1.dark * datatype.dark
-                          : datatype.dark}
-                      </td>
-                      <td className='pkmn__tab__section__table__type'>
-                        x{" "}
-                        {data.types[1]
-                          ? datatype1.steel * datatype.steel
-                          : datatype.steel}
-                      </td>
-                      <td className='pkmn__tab__section__table__type'>
-                        x{" "}
-                        {data.types[1]
-                          ? datatype1.fairy * datatype.fairy
-                          : datatype.fairy}
-                      </td>
-                    </React.Fragment>
+                  {weaknessCol1.length > 0 && (
+                    <td>
+                      {weaknessCol1.map((type) => (
+                        <Badge
+                          key={type}
+                          className={`${type} pkmn__tab__section__table__badge`}
+                        >
+                          {type}
+                        </Badge>
+                      ))}
+                    </td>
                   )}
+                  <td>
+                    {weaknessCol2R1.length > 0 && (
+                      <div>
+                        <span className='pkmn__tab__section__table__subdiv'>
+                          x 0.25
+                        </span>
+                        {weaknessCol2R1.map((type) => (
+                          <Badge
+                            key={type}
+                            className={`${type} pkmn__tab__section__table__badge`}
+                          >
+                            {type}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                    {weaknessCol2R2.length > 0 && (
+                      <div>
+                        <span className='pkmn__tab__section__table__subdiv'>
+                          x 0.5
+                        </span>
+                        {weaknessCol2R2.map((type) => (
+                          <Badge
+                            key={type}
+                            className={`${type} pkmn__tab__section__table__badge`}
+                          >
+                            {type}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                  </td>
+                  <td>
+                    {weaknessCol3 &&
+                      weaknessCol3.map((type) => (
+                        <Badge
+                          key={type}
+                          className={`${type} pkmn__tab__section__table__badge`}
+                        >
+                          {type}
+                        </Badge>
+                      ))}
+                  </td>
+                  <td>
+                    {weaknessCol4R1.length > 0 && (
+                      <div>
+                        <span className='pkmn__tab__section__table__subdiv'>
+                          x 2
+                        </span>
+                        {weaknessCol4R1.map((type) => (
+                          <Badge
+                            key={type}
+                            className={`${type} pkmn__tab__section__table__badge`}
+                          >
+                            {type}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                    {weaknessCol4R2.length > 0 && (
+                      <div>
+                        <span className='pkmn__tab__section__table__subdiv'>
+                          x 4
+                        </span>
+                        {weaknessCol4R2.map((type) => (
+                          <Badge
+                            key={type}
+                            className={`${type} pkmn__tab__section__table__badge`}
+                          >
+                            {type}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                  </td>
                 </tr>
               </tbody>
             </Table>
