@@ -1,12 +1,20 @@
 // import libraries
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Card, Badge, Row, Spinner, Placeholder } from "react-bootstrap";
+import {
+  Card,
+  Badge,
+  Row,
+  Spinner,
+  Placeholder,
+  Pagination,
+} from "react-bootstrap";
 // import assets
 import pokeball from "../assets/images/pokeball.png";
 // import css
 import "../assets/styles/gallery.scss";
 import "../assets/styles/types.scss";
+import "../assets/styles/pagination.scss";
 
 // Gallery function
 function Gallery() {
@@ -14,8 +22,8 @@ function Gallery() {
   const [data, setData] = useState([]);
   // display limit
   const [offset, setOffset] = useState(0);
-  // display max
-  const [totalOffset, setTotalOffset] = useState(0);
+  // total pokemon
+  const totalPkmn = Math.ceil(1025 / 20);
   // to change button on loading datas
   const [loading, setLoading] = useState(false);
   const fakeCards = [
@@ -29,7 +37,9 @@ function Gallery() {
         // loading state start
         setLoading(true);
         const res = await fetch(
-          `https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset}`
+          `https://pokeapi.co/api/v2/pokemon?limit=${
+            offset + 1 === totalPkmn ? 5 : 20
+          }&offset=${offset * 20}`
         );
         const json = await res.json();
         const listPkmn = [];
@@ -56,14 +66,99 @@ function Gallery() {
         // loading state end
         setLoading(false);
         // add 25 pokémons created to data
-        setData((pre) => [...pre, ...listPkmn]);
-        setTotalOffset(json.count);
+        setData([...listPkmn]);
+        // setTotalOffset(json.count);
       } catch (error) {
         console.error(error);
       }
     };
     fetchData();
-  }, [offset]);
+  }, [offset, totalPkmn]);
+
+  const renderPaginationItems = () => {
+    const items = [];
+    const maxItems = 5; // Max number of pagination items to display
+    const halfItems = Math.floor(maxItems / 2);
+
+    let start = offset - halfItems;
+    let end = offset + halfItems;
+
+    if (start < 0) {
+      start = 0;
+      end = Math.min(maxItems - 1, totalPkmn - 1);
+    }
+
+    if (end >= totalPkmn) {
+      end = totalPkmn - 1;
+      start = Math.max(0, end - maxItems + 1);
+    }
+
+    for (let i = start; i <= end; i++) {
+      items.push(
+        <Pagination.Item
+          key={i}
+          active={i === offset}
+          onClick={() => setOffset(i)}
+          className={`pagination__item ${
+            i === offset ? "pagination__item--active" : ""
+          }`}
+        >
+          {i + 1}
+        </Pagination.Item>
+      );
+    }
+
+    if (start > 0) {
+      items.unshift(
+        <Pagination.Ellipsis
+          key='start-ellipsis'
+          className='pagination__item'
+        />
+      );
+      items.unshift(
+        <Pagination.Item
+          key={0}
+          onClick={() => setOffset(0)}
+          className='pagination__item'
+        >
+          1
+        </Pagination.Item>
+      );
+    }
+
+    if (end < totalPkmn - 1) {
+      items.push(
+        <Pagination.Ellipsis key='end-ellipsis' className='pagination__item' />
+      );
+      items.push(
+        <Pagination.Item
+          key={totalPkmn - 1}
+          onClick={() => setOffset(totalPkmn - 1)}
+          className='pagination__item'
+        >
+          {totalPkmn}
+        </Pagination.Item>
+      );
+    }
+
+    return items;
+  };
+
+  const handlePrevPage = () => {
+    setOffset(Math.max(0, offset - 1));
+  };
+
+  const handleNextPage = () => {
+    setOffset(Math.min(totalPkmn - 1, offset + 1));
+  };
+
+  const handleFirstPage = () => {
+    setOffset(Math.max(0, offset - 5));
+  };
+
+  const handleLastPage = () => {
+    setOffset(Math.min(totalPkmn - 1, offset + 5));
+  };
 
   return (
     <div className='gallery'>
@@ -169,18 +264,25 @@ function Gallery() {
           </React.Fragment>
         )}
       </Row>
-      {/* button to trigger useEffect and add 25 to display */}
-      {offset < totalOffset && (
-        <button onClick={() => setOffset(offset + 20)}>
-          {loading ? (
-            <Spinner animation='border' role='status'>
-              <span className='visually-hidden'>Loading...</span>
-            </Spinner>
-          ) : (
-            "Load more"
-          )}
-        </button>
-      )}
+      <Pagination className='pagination__container'>
+        <Pagination.First
+          onClick={handleFirstPage}
+          className='pagination__item'
+        />
+        <Pagination.Prev
+          onClick={handlePrevPage}
+          className='pagination__item'
+        />
+        {renderPaginationItems()}
+        <Pagination.Next
+          onClick={handleNextPage}
+          className='pagination__item'
+        />
+        <Pagination.Last
+          onClick={handleLastPage}
+          className='pagination__item'
+        />
+      </Pagination>
     </div>
   );
 }

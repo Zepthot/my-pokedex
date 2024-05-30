@@ -1,84 +1,91 @@
 // // import bootstrap
-@import '../../../node_modules/bootstrap/scss/bootstrap.scss';
+@import "../../../node_modules/bootstrap/scss/bootstrap.scss";
 
-.gallery__group {
+.gallery {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  .gallery__group {
     gap: 20px;
     justify-content: center;
     --bs-gutter-x: 0;
 
     li {
-        list-style: none;
+      list-style: none;
     }
 
     .gallery__group__button {
-        min-width: 20vw;
-        height: 15vh;
-        padding: 0;
-        border: none;
-        text-decoration: none;
+      min-width: 20vw;
+      height: 15vh;
+      padding: 0;
+      border: none;
+      text-decoration: none;
     }
     // card
     .gallery__card {
-        min-width: 20vw;
-        height: 15vh;
-        flex-direction: row-reverse;
-        // images of pokemon + pokeball
-        .gallery__card__images {
-            width: 7vw;
-            min-width: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            img {
-                width: inherit;
-                z-index: 1;
-                position: absolute;
-            }
-        
-            .gallery__card__images__pokeball {
-                z-index: 0;
-                opacity: 30%;
-            }
-
-            .gallery__card__images__loading {
-                height: 75px;
-                width: 75px;
-            }
+      min-width: 20vw;
+      height: 15vh;
+      flex-direction: row-reverse;
+      // images of pokemon + pokeball
+      .gallery__card__images {
+        width: 7vw;
+        min-width: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+          width: inherit;
+          z-index: 1;
+          position: absolute;
         }
-        // id numbers + pokemon's name + types
-        .gallery__card__body {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
 
-            .gallery__card__body__id {
-                font-weight: 600;
-                max-height: 10vh;
-                margin-top: 1vh;
-                margin-bottom: -1vh;
-                width: 10vw;
-            }
-
-            .gallery__card__body__name {
-                font-size: 1.75vw;
-                color: #E5E5E5;
-            }
-
-            .gallery__card__body__name__loading {
-                height: 2em;
-            }
-
-            .gallery__card__body__types {
-                display: flex;
-                justify-content: space-evenly;
-                width: 10vw;
-                gap: 5px;
-
-                .card__body__types__badge {
-                    width: 5vw;
-                    font-size: x-small;
-                }
-            }
+        .gallery__card__images__pokeball {
+          z-index: 0;
+          opacity: 30%;
         }
+
+        .gallery__card__images__loading {
+          height: 75px;
+          width: 75px;
+        }
+      }
+      // id numbers + pokemon's name + types
+      .gallery__card__body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+
+        .gallery__card__body__id {
+          font-weight: 600;
+          max-height: 10vh;
+          margin-top: 1vh;
+          margin-bottom: -1vh;
+          width: 10vw;
+        }
+
+        .gallery__card__body__name {
+          font-size: 1.75vw;
+          color: #e5e5e5;
+        }
+
+        .gallery__card__body__name__loading {
+          height: 2em;
+        }
+
+        .gallery__card__body__types {
+          display: flex;
+          justify-content: space-evenly;
+          width: 10vw;
+          gap: 5px;
+
+          .card__body__types__badge {
+            width: 5vw;
+            font-size: x-small;
+          }
+        }
+      }
     }
+  }
 }
