@@ -646,7 +646,6 @@ function Pokemon() {
                   shiny={isShiny}
                 />
                 <div className='pkmn__evolution__container__treeEvo'>
-                  {/* test with 265 = evolution-chain/135/ + 133 = evolution-chain/67*/}
                   {dataevo.chain.evolves_to.map((first, index) => {
                     return (
                       <div
