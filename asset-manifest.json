@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/my-pokedex/static/css/main.e31699f3.css",
+    "main.js": "/my-pokedex/static/js/main.250b49ef.js",
+    "static/media/Duskskull.gif": "/my-pokedex/static/media/Duskskull.6178c5aa9521c1e9ab53.gif",
+    "static/media/pokeball.png": "/my-pokedex/static/media/pokeball.a3224c06a4899add213c.png",
+    "static/media/Baby Boomer.ttf": "/my-pokedex/static/media/Baby Boomer.dc7676c86c15f1e37e67.ttf",
+    "index.html": "/my-pokedex/index.html",
+    "main.e31699f3.css.map": "/my-pokedex/static/css/main.e31699f3.css.map",
+    "main.250b49ef.js.map": "/my-pokedex/static/js/main.250b49ef.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e31699f3.css",
+    "static/js/main.250b49ef.js"
+  ]
+}
